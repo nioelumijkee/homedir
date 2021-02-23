@@ -69,27 +69,27 @@
 
 ;; -------------------------------------------------------------------------- ;;
 (set-language-environment 'UTF-8) ;; coding-system settings
-(setq frame-title-format "emacs -> [%b]")
-(setq inhibit-splash-screen   t)
-(setq ingibit-startup-message t)
+(setq frame-title-format "emacs -> [%b]") ;; title
+(setq inhibit-splash-screen   t) ;; startup
+(setq ingibit-startup-message t) ;; startup
 (show-paren-mode t)
 (setq show-paren-style -1)
 (electric-indent-mode -1)
 (electric-pair-mode -1)
 (delete-selection-mode 1)
 (tooltip-mode -1)
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(blink-cursor-mode -1)
-(setq use-dialog-box -1)
+(menu-bar-mode -1) ;; gui
+(tool-bar-mode -1) ;; gui
+(scroll-bar-mode -1) ;; gui
+(blink-cursor-mode -1)             ;; cursor
+(setq-default cursor-type 'box)    ;; cursor
+(setq use-dialog-box -1) ;; gui
 ;;(set-frame-font "Consolas 9")
 ;;(set-frame-font "Terminus 10")
 (set-frame-font "-*-dejavu sans mono-medium-r-*-*-12-*-*-*-*-*-iso10646-1")
-(setq-default cursor-type 'box)
 (setq ring-bell-function 'ignore)
 (setq redisplay-dont-pause t)
-(setq make-backup-files   nil)
+(setq make-backup-files   nil)   ;; backup and autosave
 (setq auto-save-default   nil)
 (setq auto-save-file-name nil)
 (column-number-mode t)
@@ -102,8 +102,8 @@
 (global-visual-line-mode t)
 ;;(when (window-system)(set-frame-size (selected-frame) 81 53))
 (defalias 'yes-or-no-p 'y-or-n-p)
-(global-hl-line-mode 0)
-(setq x-select-enable-clipboard t)
+(global-hl-line-mode 0)               ;; hl
+(setq x-select-enable-clipboard t)  ;; clipboard overall with os
 (setq auto-fill-mode -1)
 (setq next-line-add-newlines  nil)
 (setq search-highlight t)
@@ -141,21 +141,21 @@
 ;; -------------------------------------------------------------------------- ;;
 (require 'dired)
 (setq dired-recursive-deletes 'top)
-;; ls
 (setq dired-listing-switches "-alh --group-directories-first")
+(setq dired-dwim-target t)
 ;; keys
-(define-key dired-mode-map (kbd "<up>")    (lambda () (interactive) (dired-my-nav-line -1)))
-(define-key dired-mode-map (kbd "<down>")  (lambda () (interactive) (dired-my-nav-line 1)))
-(define-key dired-mode-map (kbd "DEL")     (lambda () (interactive) (dired-my-nav-line -1)))
-(define-key dired-mode-map (kbd "SPC")     (lambda () (interactive) (dired-my-nav-line 1)))
-(define-key dired-mode-map (kbd "p")       (lambda () (interactive) (dired-my-nav-line -1)))
-(define-key dired-mode-map (kbd "n")       (lambda () (interactive) (dired-my-nav-line 1)))
-(define-key dired-mode-map (kbd "<prior>") (lambda () (interactive) (dired-my-nav-line -10)))
-(define-key dired-mode-map (kbd "<next>")  (lambda () (interactive) (dired-my-nav-line 10)))
-(define-key dired-mode-map (kbd "RET")     'dired-find-file)
-(define-key dired-mode-map (kbd "<right>") 'dired-find-file)
-(define-key dired-mode-map (kbd "<left>")  (lambda () (interactive) (find-file "..")))
-(define-key dired-mode-map (kbd "TAB")     'dired-my-other-window)
+(define-key dired-mode-map (kbd "<up>")     (lambda () (interactive) (dired-my-nav-line -1)))
+(define-key dired-mode-map (kbd "<down>")   (lambda () (interactive) (dired-my-nav-line 1)))
+(define-key dired-mode-map (kbd "DEL")      (lambda () (interactive) (dired-my-nav-line -1)))
+(define-key dired-mode-map (kbd "SPC")      (lambda () (interactive) (dired-my-nav-line 1)))
+(define-key dired-mode-map (kbd "p")        (lambda () (interactive) (dired-my-nav-line -1)))
+(define-key dired-mode-map (kbd "n")        (lambda () (interactive) (dired-my-nav-line 1)))
+(define-key dired-mode-map (kbd "<prior>")  (lambda () (interactive) (dired-my-nav-line -10)))
+(define-key dired-mode-map (kbd "<next>")   (lambda () (interactive) (dired-my-nav-line 10)))
+(define-key dired-mode-map (kbd "RET")      'dired-find-file)
+(define-key dired-mode-map (kbd "<right>")  'dired-find-file)
+(define-key dired-mode-map (kbd "<left>")   (lambda () (interactive) (find-file "..")))
+(define-key dired-mode-map (kbd "TAB")      'dired-my-other-window)
 (define-key dired-mode-map (kbd "M-<up>")    nil)
 (define-key dired-mode-map (kbd "M-<down>")  nil)
 (define-key dired-mode-map (kbd "M-<right>") nil)
@@ -163,9 +163,20 @@
 (define-key dired-mode-map (kbd "a")         nil)
 (define-key dired-mode-map (kbd "^")         nil)
 (define-key dired-mode-map (kbd "o")         nil)
+(define-key dired-mode-map (kbd "C-SPC")     'dired-my-dush)
 ;;
 (add-hook 'dired-mode-hook 'dired-my-settings)
 
+(defun dired-my-dush ()
+  "get size file or dir du -sh"
+  (interactive)
+  (let ((buf))
+    (setq buf (dired-get-marked-files))
+    (setq buf (mapconcat 'identity buf " "))
+    (setq buf (format "du -sh \'%s\'" buf))
+    (message buf)
+    (shell-command buf)))
+  
 (defun dired-my-other-window ()
   "Navigate in dired-mode between window if widow is Dired"
   (interactive)
@@ -202,7 +213,13 @@
     (while (< arg 0)
       (dired-my-previous-line 1)
       (setq arg (1+ arg)))
-    ))
+    )
+  (let ((buf))
+    ((setq buf (dired-get-marked-files))
+     (setq buf (mapconcat 'identity buf " "))
+     (setq buf (format "\'%s\'" buf))
+     (message buf)))
+  )
 
 (defun dired-my-previous-line (arg)
   "Move up lines then position at filename."
@@ -263,6 +280,9 @@
   (setq cursor-type nil)
   (face-remap-add-relative 'hl-line '((:background "#343434") hl-line)))
 
+(add-hook 'dired-mode-hook '(lambda () (toggle-truncate-lines 1)))
+(add-hook 'dired-mode-hook '(lambda () (visual-line-mode 0)))
+
 (put 'dired-find-alternate-file 'disabled nil)
 
 ;; -------------------------------------------------------------------------- ;;
@@ -289,8 +309,18 @@
 (require 'eshell)
 (setq eshell-history-file-name "~/.emacs.eshell.history")
 (setq eshell-history-size 16384)
-(setq shell-file-name "bash")
-(setq shell-command-switch "-ic")
+;;(setq shell-file-name "bash")
+;;(setq shell-command-switch "-ic")
+
+(add-hook 'eshell-mode-hook (lambda () (define-key eshell-mode-map (kbd "<up>")     'nil)))
+(add-hook 'eshell-mode-hook (lambda () (define-key eshell-mode-map (kbd "<down>")   'nil)))
+(add-hook 'eshell-mode-hook (lambda () (define-key eshell-mode-map (kbd "S-<up>")   'nil)))
+(add-hook 'eshell-mode-hook (lambda () (define-key eshell-mode-map (kbd "S-<down>") 'nil)))
+
+(defun eshell-my-nothing ()
+  ""
+  (interactive)
+  (message "-"))
 
 (defcustom eshell-banner-message "...::: EMACS SHELL. WELCOME :::...\n\n"
   "The banner message to be displayed when Eshell is loaded.
