@@ -1,0 +1,116 @@
+! macro
+#define C_WHITE		#FFFFFF
+#define TERM_FONT	-*-terminus-medium-r-normal-*-14-140-72-72-c-78-iso10646-1
+
+! cairo libxft
+Xft.antialias:		true
+Xft.dpi:		96.0
+Xft.hinting:		true
+Xft.hintstyle:		hintslight
+Xft.rgba:		none
+Xft.lcdfilter:		lcddefault
+
+! default font
+*Font:			-*-fixed-medium-r-normal-*-14-*-*-*-c-*-iso10646-1
+
+! XCursor
+Xcursor.theme:		whiteglass
+Xcursor.size:		18
+
+! Emacs
+Emacs.FontBackend:	xft
+
+! Xaw
+*Text.background:		#FFFFFF
+*Command.borderWidth:		1
+!*Command.shapeStyle:		rect
+*Command.foreground:		Black
+*Command.background:		White
+*Toggle.borderWidth:		1
+!*Toggle.shapeStyle:		rect
+*Toggle.foreground:		Black
+*Toggle.background:		Grey
+*MenuButton.borderWidth:	1
+!*MenuButton.shapeStyle:	rect
+*MenuButton.foreground:		Blue
+*MenuButton.background:		Yellow
+*SimpleMenu.borderWidth:	2
+!*SimpleMenu.shapeStyle:	rect
+*SimpleMenu.background:		Yellow
+*SimpleMenu.borderColor:	Blue
+*SmeBSB.foreground:		Blue
+*Tree.background:		Black
+*Porthole.background:		White
+
+! XTerm
+XTerm*allowBoldFonts:	False
+XTerm*cursorColor:	Green
+XTerm*scrollBar:	False
+XTerm*saveLines:	2000
+XTerm*font:		TERM_FONT
+XTerm*utf8:		1
+XTerm*locale:		1
+XTerm*background:	#202020
+XTerm*foreground:	#eeeeee
+! Black+DarkGrey
+XTerm*color0:		#000000
+XTerm*color8:		#404040
+! DarkRed+Red
+XTerm*color1:		#dd1010
+XTerm*color9:		#dd5050
+! DarkGreen+Green
+XTerm*color2:		#10dd10
+XTerm*color10:		#40dd40
+! DarkYellow+Yellow
+XTerm*color3:		#aaaa10
+XTerm*color11:		#bbbb40
+! DarkBlue+Blue
+XTerm*color4:		#202070
+XTerm*color12:		#6060aa
+! DarkMagenta+Magenta
+XTerm*color5:		#953ea0
+XTerm*color13:		#a55ec0
+! DarkCyan+Cyan
+XTerm*color6:		#7070ff
+XTerm*color14:		#aabbff
+! LightGrey+White
+XTerm*color7:		#999999
+XTerm*color15:		#cccccc
+
+! QXTerm
+QXTerm*cursorColor:	Green
+QXTerm*scrollBar:	True
+QXTerm*saveLines:	4000
+QXTerm*scrollBarBorder:	8
+QXTerm*font:		TERM_FONT
+QXTerm*utf8:		1
+QXTerm*locale:		1
+QXTerm*geometry:	167x25+0+0
+QXTerm*title:		qxterm
+QXTerm*background:	#bbbbbb
+QXTerm*foreground:	#202020
+! Black+DarkGrey
+QXTerm*color0:		#000000
+QXTerm*color8:		#404040
+! DarkRed+Red
+QXTerm*color1:		#dd1010
+QXTerm*color9:		#dd5050
+! DarkGreen+Green
+QXTerm*color2:		#10dd10
+QXTerm*color10:		#20aa20
+! DarkYellow+Yellow
+QXTerm*color3:		#aaaa10
+QXTerm*color11:		#bbbb40
+! DarkBlue+Blue
+QXTerm*color4:		#252580
+QXTerm*color12:		#2020aa
+! DarkMagenta+Magenta
+QXTerm*color5:		#953ea0
+QXTerm*color13:		#a55ec0
+! DarkCyan+Cyan
+QXTerm*color6:		#606090
+QXTerm*color14:		#9090bb
+! LightGrey+White
+QXTerm*color7:		#999999
+QXTerm*color15:		#cccccc
+
