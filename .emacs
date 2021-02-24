@@ -215,11 +215,10 @@
       (setq arg (1+ arg)))
     )
   (let ((buf))
-    ((setq buf (dired-get-marked-files))
-     (setq buf (mapconcat 'identity buf " "))
-     (setq buf (format "\'%s\'" buf))
-     (message buf)))
-  )
+    (setq buf (dired-get-marked-files))
+    (setq buf (mapconcat 'identity buf " "))
+    (setq buf (format "%s" buf))
+    (message buf)))
 
 (defun dired-my-previous-line (arg)
   "Move up lines then position at filename."
@@ -372,7 +371,9 @@ prompt."
   "Reads bash env from .bashrc and set"
   (interactive)
   (progn
-    (shell-command "cat ~/.bashrc | grep ^export" "bash-env" "bash-errors")
+    (shell-command 
+     "for i in $(cat ~/.bashrc | grep '^export'); do if [ $i != 'export' ]; then eval \"echo $i\"; fi; done" 
+     "bash-env" "bash-errors")
     (switch-to-buffer "bash-env")
     (goto-char 1)
     (replace-string "export " "")
