@@ -3,7 +3,7 @@ source /etc/profile
 # env
 export PD_PATH=$HOME/bin/local/pd
 export PYTHONPATH=$HOME/python
-export GIT_EDITOR=vi
+export GIT_EDITOR=mcedit
 export PD_RECORDS=$HOME/data/audio/audio_pd
 export MYTMP=/run/tmp
 
