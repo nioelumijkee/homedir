@@ -327,17 +327,15 @@ This can be any sexp, and should end with at least two newlines."
   :type 'sexp
   :group 'eshell-banner)
 
-(defcustom eshell-prompt-function
-  (function
-   (lambda ()
-     (concat (abbreviate-file-name (eshell/pwd))
-	     (if (= (user-uid) 0) " # " " > "))))
-  "A function that returns the Eshell prompt string.
-Make sure to update `eshell-prompt-regexp' so that it will match your
-prompt."
-  :type 'function
-  :group 'eshell-prompt)
 
+;; eshell promopt
+(defun my-eshell-prompt ()
+  (concat (propertize (abbreviate-file-name (eshell/pwd)) 'face '(:foreground "lightblue"))
+	  " > "))
+
+;; em-prompt
+(setq eshell-prompt-function 'my-eshell-prompt)
+(setq eshell-prompt-regexp "^[^>]+ > ")
 
 (defun eshell-load-bash-aliases ()
   "Reads bash aliases from .bashrc and inserts
