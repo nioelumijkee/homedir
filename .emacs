@@ -125,6 +125,8 @@
 (require 'bs)
 (require 'ibuffer)
 (defalias 'list-buffers 'ibuffer) ;; C-x C-b
+(add-hook 'ibuffer-mode-hook '(lambda () (toggle-truncate-lines 1)))
+(add-hook 'ibuffer-mode-hook '(lambda () (visual-line-mode 0)))
 
 ;; -------------------------------------------------------------------------- ;;
 (require 'font-lock)
@@ -283,6 +285,7 @@
 (add-hook 'dired-mode-hook '(lambda () (visual-line-mode 0)))
 
 (put 'dired-find-alternate-file 'disabled nil)
+
 
 ;; -------------------------------------------------------------------------- ;;
 (require 'imenu)
